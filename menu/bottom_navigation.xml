@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_myHikes"
+        android:icon="@drawable/bottom_navigation_icon_selecter"
+        android:title="@string/my_hikes" />
+
+    <item
+        android:id="@+id/challenges"
+        android:icon="@drawable/bottom_navigation_icon_selector_challange"
+        android:title="@string/challenges" />
+
+    <item
+        android:id="@+id/community"
+        android:icon="@drawable/bottom_navigation_icon_selecter_comm"
+        android:title="@string/community" />
+
+    <item
+        android:id="@+id/store"
+        android:icon="@drawable/bottom_navigation_selecter_store"
+        android:title="@string/store" />
+
+
+</menu>

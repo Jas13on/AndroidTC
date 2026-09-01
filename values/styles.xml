@@ -1,0 +1,77 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/white</item>
+       <!-- <item name="android:windowBackground">@drawable/splash_screen</item>-->
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+    <style name="loginEmailEditText">
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:padding">@dimen/dp12</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/rubic_regular</item>
+        <item name="android:layout_height">@dimen/dp50</item>
+        <item name="android:paddingLeft">@dimen/dp25</item>
+        <item name="android:layout_marginLeft">@dimen/dp25</item>
+        <item name="android:layout_marginTop">@dimen/dp10</item>
+        <item name="android:layout_marginRight">@dimen/dp25</item>
+        <item name="android:textSize">@dimen/sp16</item>
+    </style>
+
+    <style name="BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.Active</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNavigationView.Inactive</item>
+        <item name="android:textSize">@dimen/sp14</item>
+        <item name="fontFamily">@font/rubic_regular</item>
+    </style>
+
+    <!-- blank styles for better code readability-->
+    <style name="TextAppearance"/>
+    <style name="TextAppearance.BottomNavigationView"/>
+
+    <style name="font_very_large">
+        <item name="android:fontFamily">@font/rubic_regular</item>
+        <item name="android:textSize">@dimen/sp22</item>
+    </style>
+    <style name="font_medium">
+        <item name="android:fontFamily">@font/rubic_regular</item>
+        <item name="android:textSize">@dimen/sp16</item>
+    </style>
+    <style name="font_small">
+        <item name="android:fontFamily">@font/rubic_regular</item>
+        <item name="android:textSize">@dimen/sp14</item>
+    </style>
+    <!-- inactive tab icon style -->
+    <style name="TextAppearance.BottomNavigationView.Inactive">
+        <item name="android:textSize">@dimen/sp10</item>
+        <item name="fontFamily">@font/rubic_regular</item>
+    </style>
+
+    <!-- active tab icon style -->
+    <style name="TextAppearance.BottomNavigationView.Active">
+        <item name="android:textSize">@dimen/sp10</item>
+        <item name="fontFamily">@font/rubic_regular</item>
+    </style>
+
+    <style name="header_text_style">
+        <item name="android:textSize">@dimen/sp19</item>
+        <item name="fontFamily">@font/rubic_regular</item>
+    </style>
+
+
+    <style name="ImageView.Corner" parent="">
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">60dp</item>
+        <item name="cornerSizeBottomRight">60dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+</resources>
