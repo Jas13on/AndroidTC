@@ -1,0 +1,286 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'com.google.firebase.crashlytics'
+}
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}
+
+android {
+    namespace "com.app.trailChallenger"
+    testNamespace "com.app.trailChallenger"
+
+    compileSdk 34
+    defaultConfig {
+        applicationId "com.app.trailChallenger"
+        minSdkVersion 23
+        targetSdkVersion 34
+        versionCode 31
+        versionName "1.0.31"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "arm64-v8a", "armeabi-v7a"/* , "x86" ,"x86_64"*/
+        }
+        multiDexEnabled true
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    flavorDimensions "buildTypes"
+    productFlavors
+            {
+                production {
+                    dimension "buildTypes"
+                    buildConfigField "String", "BASE_URL", '"http://trailchallenger.support/api/"'
+                }
+                staging {
+                    dimension "buildTypes"
+                    buildConfigField "String", "BASE_URL", '"http://34.224.99.212/api/"'
+                }
+                development {
+                    dimension "buildTypes"
+                    resValue("bool", "FIREBASE_CRASH_ENABLED", "true")
+                    buildConfigField "String", "BASE_URL", '"http://dev.trailchallenger.support/api/"'
+                }
+            }
+
+    signingConfigs {
+        debug {
+            storeFile file("../app/av.jks")
+            storePassword "av12345"
+            keyAlias "avalias"
+            keyPassword "av12345"
+        }
+        release {
+            storeFile file("../app/av.jks")
+            storePassword "av12345"
+            keyAlias "avalias"
+            keyPassword "av12345"
+        }
+
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            debuggable = true
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    /*Ignore development release variant*/
+    /*variantFilter { variant ->
+        def name_type = variant.flavors*.name
+        def name = name_type.join()
+
+        if (variant.buildType.name == 'release' && name.contains('development')) {
+            setIgnore(true)
+        }
+    }*/
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    bundle {
+        language {
+            // Specifies th@at the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+    }
+/*
+    configurations.all {
+        exclude(group = "com.google.guava", module = "listenablefuture")
+    }*/
+   /* packagingOptions {
+        resources {
+            exclude(  "com.mapbox.android.core.location.LocationEngine")
+            exclude(  "com.mapbox.android.core.location.LocationEngineCallback")
+            exclude( "com.mapbox.android.core.location.LocationEngineProvider")
+            exclude(  "com.mapbox.android.core.location.LocationEngineRequest")
+            exclude(  "com.mapbox.android.core.location.LocationEngineResult")
+            exclude(  "com.mapbox.android.core.permissions.PermissionsListener")
+            exclude(  "com.mapbox.android.core.permissions.PermissionsManager")
+
+
+
+
+            *//* += setOf(
+                  ,
+                    "com.mapbox.android.core.location.LocationEngineCallback",
+                    "com.mapbox.android.core.location.LocationEngineProvider",
+                    "com.mapbox.android.core.location.LocationEngineRequest",
+                  //  "com.mapbox.android.core.location.LocationEngineRequest$1",
+                    //"com.mapbox.android.core.location.LocationEngineRequest$Builder",
+                    "com.mapbox.android.core.location.LocationEngineResult",
+                    "com.mapbox.android.core.permissions.PermissionsListener",
+                    "com.mapbox.android.core.permissions.PermissionsManager",
+                   // "com.mapbox.android.core.permissions.PermissionsManager$AccuracyAuthorization"
+            )*//*
+        }
+    }*/
+}
+
+dependencies {
+    def retrofitVersion = "2.9.0"
+    def lifecycle_version = "1.1.1"
+    def okhttp3 = '3.10.0'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    configurations {
+        androidApis {
+            exclude group: 'com.google.guava', module: 'listenablefuture'
+        }
+    }
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    //implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.9.0'
+   /* implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:6.3.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:5.7.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-accounts:0.7.0'
+    implementation ("com.mapbox.navigation:android:2.17.11") {
+        exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-core'
+        exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-common'
+        transitive = true
+    }*/
+   // implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.1'
+/*
+    implementation('com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.0') {
+        transitive = true
+    }
+    implementation('com.mapbox.mapboxsdk:mapbox-android-navigation-ui:0.42.6') {
+        exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-core'
+        exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-common'
+        transitive = true
+    }
+   // implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation:0.42.6'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.9.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-turf:6.3.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:5.7.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-accounts:0.7.0'
+    implementation ("com.mapbox.navigation:android:2.17.11") {
+                exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-core'
+                exclude group: 'com.mapbox.mapboxsdk', module: 'mapbox-android-common'
+                transitive = true
+            }*/
+    implementation "com.google.android.gms:play-services-location:19.0.1"
+
+
+    // implementation 'com.mapbox.maps.plugin.animation:0.0.1'
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation "com.google.android.material:material:1.6.0-beta01"
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'me.relex:circleindicator:2.1.6'
+    implementation 'com.github.yalantis:ucrop:2.2.6'
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':cameraLib')
+    implementation 'com.github.eggheadgames:Siren:1.4.+'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10"
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
+    implementation "com.github.bumptech.glide:glide:4.12.0"
+    //amazon aws
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.13.4'
+    implementation "com.airbnb.android:lottie:3.6.0"
+
+    //for firebase
+    implementation 'com.google.firebase:firebase-analytics:20.1.2'
+    implementation "com.google.firebase:firebase-messaging:23.0.2"
+    implementation "com.google.firebase:firebase-core:20.1.2"
+    implementation 'com.google.firebase:firebase-database:20.0.4'
+
+    //stripe
+    implementation 'com.stripe:stripe-android:19.3.1'
+    implementation 'com.stripe:stripe-android:19.3.1'
+
+    implementation 'com.stripe:stripe-android:19.3.0'
+    implementation 'com.google.android.gms:play-services-wallet:19.1.0'
+
+    //country code picker
+    implementation 'com.hbb20:ccp:2.5.4'
+
+    // round corner image view
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    // event bus
+    implementation "org.greenrobot:eventbus:3.3.1"
+    implementation "com.mapbox.navigation:android:2.17.11"
+
+   // implementation 'com.mapbox.maps:android:9.7.1'
+   // implementation 'com.mapbox.maps:android:10.16.2'
+
+    //swipe refresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:30.0.0')
+    // Declare the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+
+    implementation "com.google.android.material:material:1.3.0"
+//viewpager 2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    implementation 'com.smartlook.recording:app:1.8.11-native'
+    // implementation 'com.smartlook.android:smartlook-analytics:2.1.6'
+
+    // dependency for exoplayer
+
+    implementation "com.google.android.exoplayer:exoplayer:2.18.2"
+
+// for core support in exoplayer.
+
+    implementation "com.google.android.exoplayer:exoplayer-core:2.18.2"
+
+// for adding dash support in our exoplayer.
+
+    implementation "com.google.android.exoplayer:exoplayer-dash:2.18.2"
+
+// for adding hls support in exoplayer.
+
+    implementation "com.google.android.exoplayer:exoplayer-hls:2.18.2"
+
+// for smooth streaming of video in our exoplayer.
+
+    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:2.18.2"
+
+// for generating default ui of exoplayer
+
+    implementation "com.google.android.exoplayer:exoplayer-ui:2.18.2"
+
+    implementation "androidx.core:core-ktx:1.7.0"
+
+   // implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+   // implementation "androidx.multidex:multidex:2.0.1"
+
+        implementation "com.mapbox.navigation:copilot:2.17.13"
+
+
+}
